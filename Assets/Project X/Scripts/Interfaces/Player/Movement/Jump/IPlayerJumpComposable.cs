@@ -1,4 +1,4 @@
 public interface IPlayerJumpComposable  
 {
-    public void Jump(); // добавить бул переменную
+    public void Jump(bool jumpPressed); 
 }

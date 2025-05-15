@@ -1,6 +1,8 @@
+using UnityEngine;
+
 public interface IPlayerMovementControllable 
 {
-    public void HandleMove(); // добавить вектор 2
+    public void HandleMove(Vector2 moveInput); 
 
-    public void HandleJump(); // добавить бул переменную
+    public void HandleJump(bool jumpPressed); 
 }

@@ -3,11 +3,11 @@ using UnityEngine.InputSystem;
 
 public class PlayerNewInputSystemHandler : MonoBehaviour, IInputHandlable
 {
-    // NewInputSystem это детали инпут системы, поэтому у нас в интерфейсе общие свойства для любого импута (старый, новый), а отписка и подписка событий это уже детали New Input System,
-    // поэтому их мы не внесли в состав интерфейса как отдельные методы методы
+    // NewInputSystem это детали инпут системы, поэтому у нас в интерфейсе общие свойства для любого импута (старый, новый), а методы чтения и отписка и подписка событий это
+    // уже детали New Input System, поэтому их мы не внесли в состав интерфейса, а сделали деталями данного класса низкого уровня, и в итоге мы зависим от абстракции, а не она от нас (?)
 
-    public Vector2 MoveInput => throw new System.NotImplementedException();
-    public bool JumpPressed => throw new System.NotImplementedException();
+    public Vector2 MoveInput { get; private set; }
+    public bool JumpPressed { get; private set; }
 
     public bool SwitchViewPressed => throw new System.NotImplementedException();
 
@@ -16,6 +16,11 @@ public class PlayerNewInputSystemHandler : MonoBehaviour, IInputHandlable
     private void Awake()
     {
         _gameInput = new InputSystem_Actions();
+    }
+
+    private void LateUpdate() 
+    {
+        JumpPressed = false; // Поведение нажатия: инпут регистрируется в течение одного кадра, затем сбрасывается.
     }
 
     private void OnEnable()
@@ -31,32 +36,31 @@ public class PlayerNewInputSystemHandler : MonoBehaviour, IInputHandlable
     private void Subscribe()
     {
         _gameInput.Enable();
+
         _gameInput.Player.Jump.performed += OnJumpPerformed;
+
+        _gameInput.Player.Move.performed += OnMovePerfomed;
+        _gameInput.Player.Move.canceled += OnMovePerfomed;
+
     }
 
     private void Unsibscribe()
     {
-        _gameInput.Disable();
         _gameInput.Player.Jump.performed -= OnJumpPerformed;
+
+        _gameInput.Player.Move.performed -= OnMovePerfomed;
+        _gameInput.Player.Move.canceled -= OnMovePerfomed;
+
+        _gameInput.Disable();
     }
 
     private void OnJumpPerformed(InputAction.CallbackContext obj)
     {
-        JumpInputRead();
+        JumpPressed = true;
     }
 
-    public void MoveInputRead()
+    private void OnMovePerfomed(InputAction.CallbackContext obj)
     {
-        throw new System.NotImplementedException();
-    }
-
-    public void JumpInputRead()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void SwitchViewInputRead()
-    {
-        throw new System.NotImplementedException();
+        MoveInput = obj.ReadValue<Vector2>();
     }
 }

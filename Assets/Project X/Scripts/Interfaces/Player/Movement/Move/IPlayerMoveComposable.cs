@@ -1,4 +1,6 @@
+using UnityEngine;
+
 public interface IPlayerMoveComposable 
 {
-    public void Move(); // добавить вектор 2
+    public void Move(Vector2 moveInput); 
 }

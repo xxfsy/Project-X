@@ -2,13 +2,19 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private IPlayerMovementControllable _playerMovementController;
+    private IPlayerMovementControllable _playerMovementController;
+    private IInputHandlable _playerNewInputSystemHandler;
+
+    private void Awake()
+    {
+        // как предотвратить что тут может быть null ???
+        _playerMovementController = GetComponent<IPlayerMovementControllable>();
+        _playerNewInputSystemHandler = GetComponent<IInputHandlable>();
+    }
 
     private void Update()
     {
-        // сначала считывать инпут потом передавать в контроллер
-
-        _playerMovementController.HandleJump();
-        _playerMovementController.HandleMove();
+        _playerMovementController.HandleJump(_playerNewInputSystemHandler.JumpPressed);
+        _playerMovementController.HandleMove(_playerNewInputSystemHandler.MoveInput);
     }
 }

@@ -1,17 +1,25 @@
 using UnityEngine;
 
+[RequireComponent(typeof(IPlayerMoveComposable))]
+[RequireComponent(typeof(IPlayerJumpComposable))]
 public class PlayerMovementController : MonoBehaviour, IPlayerMovementControllable
 {
-    private IPlayerJumpComposable _playerJumpComponent;
     private IPlayerMoveComposable _playerMoveComponent;
+    private IPlayerJumpComposable _playerJumpComponent;
 
-    public void HandleJump()
+    private void Awake()
     {
-        _playerJumpComponent.Jump();
+        _playerMoveComponent = GetComponent<IPlayerMoveComposable>();
+        _playerJumpComponent = GetComponent<IPlayerJumpComposable>();
     }
 
-    public void HandleMove()
+    public void HandleMove(Vector2 moveInput)
     {
-        _playerMoveComponent.Move();
+        _playerMoveComponent.Move(moveInput);
+    }
+
+    public void HandleJump(bool jumpPressed)
+    {
+        _playerJumpComponent.Jump(jumpPressed);
     }
 }

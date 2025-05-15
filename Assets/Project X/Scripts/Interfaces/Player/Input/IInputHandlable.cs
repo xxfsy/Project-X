@@ -6,8 +6,4 @@ public interface IInputHandlable
     public bool JumpPressed { get; }
 
     public bool SwitchViewPressed { get; }
-
-    public void MoveInputRead();
-    public void JumpInputRead();
-    public void SwitchViewInputRead();
 }

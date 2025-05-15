@@ -1,9 +1,11 @@
 using UnityEngine;
 
+[RequireComponent(typeof(CharacterController))]
 public class PlayerJumpComponent : MonoBehaviour, IPlayerJumpComposable
 {
-    public void Jump()
+    public void Jump(bool jumpPressed)
     {
-        throw new System.NotImplementedException();
+        if (jumpPressed)
+            Debug.Log("Player jumped");
     }
 }

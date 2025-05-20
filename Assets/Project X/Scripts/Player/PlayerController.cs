@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    // TO DO: add DI pattern
+
     //private IPlayerMovementControllable _playerMovementController; // нарушает ISP & LSP
     private IMovablePlayerMovementController _movablePlayerMovementController;
     private IJumplablePlayerMovementController _jumplablePlayerMovementController;

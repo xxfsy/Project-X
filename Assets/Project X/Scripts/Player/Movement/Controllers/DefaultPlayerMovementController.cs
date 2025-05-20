@@ -2,8 +2,10 @@ using UnityEngine;
 
 [RequireComponent(typeof(IPlayerMoveComposable))]
 [RequireComponent(typeof(IPlayerJumpComposable))]
-public class PlayerMovementController : MonoBehaviour, IPlayerMovementControllable
+public class DefaultPlayerMovementController : MonoBehaviour, IMovablePlayerMovementController, IJumplablePlayerMovementController
 {
+    //TODO: gravity, jump and rotation
+
     private IPlayerMoveComposable _playerMoveComponent;
     private IPlayerJumpComposable _playerJumpComponent;
 
